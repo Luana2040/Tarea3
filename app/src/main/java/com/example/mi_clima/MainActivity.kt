@@ -3,46 +3,48 @@ package com.example.mi_clima
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var txtTemperatura: TextView
-    private lateinit var txtHumedad: TextView
-    private lateinit var txtSensacion: TextView
-    private lateinit var txtViento: TextView
-    private lateinit var txtPrecipitacion: TextView
-    private lateinit var txtEstado: TextView
+    // Enlazamos las nuevas variables de las tarjetas
+    private lateinit var tvTemperatura: TextView
+    private lateinit var tvSensacion: TextView
+    private lateinit var tvHumedad: TextView
+    private lateinit var tvViento: TextView
+    private lateinit var tvPrecipitacion: TextView
+    private lateinit var tvEstado: TextView
     private lateinit var btnActualizar: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_main)
 
-        txtTemperatura = findViewById(R.id.txtTemperatura)
-        txtHumedad = findViewById(R.id.txtHumedad)
-        txtSensacion = findViewById(R.id.txtSensacion)
-        txtViento = findViewById(R.id.txtViento)
-        txtPrecipitacion = findViewById(R.id.txtPrecipitacion)
-        txtEstado = findViewById(R.id.txtEstado)
+        // Inicializamos las vistas con los nuevos IDs del XML
+        tvTemperatura = findViewById(R.id.tv_temperatura)
+        tvSensacion = findViewById(R.id.tv_sensacion)
+        tvHumedad = findViewById(R.id.tv_humedad)
+        tvViento = findViewById(R.id.tv_viento)
+        tvPrecipitacion = findViewById(R.id.tv_precipitacion)
+        tvEstado = findViewById(R.id.tv_estado)
         btnActualizar = findViewById(R.id.btnActualizar)
 
+        // Primera llamada al abrir la app
         obtenerClima()
 
+        // Llamada al presionar el botón
         btnActualizar.setOnClickListener {
             obtenerClima()
         }
     }
 
     private fun obtenerClima() {
-
         lifecycleScope.launch {
-
             try {
-
+                // Tu misma petición a la API
                 val respuesta = RetrofitClient.api.obtenerClima(
                     latitude = -8.3791,
                     longitude = -74.5539,
@@ -52,28 +54,18 @@ class MainActivity : AppCompatActivity() {
 
                 val clima = respuesta.current
 
-                txtTemperatura.text =
-                    "🌡️ Temperatura: ${clima.temperature_2m} °C"
-
-                txtHumedad.text =
-                    "💧 Humedad: ${clima.relative_humidity_2m} %"
-
-                txtSensacion.text =
-                    "🌡️ Sensación térmica: ${clima.apparent_temperature} °C"
-
-                txtViento.text =
-                    "💨 Viento: ${clima.wind_speed_10m} km/h"
-
-                txtPrecipitacion.text =
-                    "🌧️ Precipitación: ${clima.precipitation} mm"
-
-                txtEstado.text =
-                    "Código del clima: ${clima.weather_code}"
+                // Asignamos los datos a cada tarjeta, agregando la unidad de medida
+                tvTemperatura.text = "${clima.temperature_2m}°C"
+                tvSensacion.text = "${clima.apparent_temperature}°C"
+                tvHumedad.text = "${clima.relative_humidity_2m}%"
+                tvViento.text = "${clima.wind_speed_10m} km/h"
+                tvPrecipitacion.text = "${clima.precipitation} mm"
+                tvEstado.text = "${clima.weather_code}"
 
             } catch (e: Exception) {
-
-                txtEstado.text =
-                    "Error al obtener el clima: ${e.message}"
+                // En caso de error, mostramos un pequeño aviso en pantalla (Toast)
+                Toast.makeText(this@MainActivity, "Error: ${e.message}", Toast.LENGTH_LONG).show()
+                tvEstado.text = "Error"
             }
         }
     }
