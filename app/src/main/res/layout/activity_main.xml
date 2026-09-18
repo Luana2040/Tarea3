@@ -19,14 +19,15 @@
         android:textSize="28sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="match_parent"
+    <!-- Menú desplegable para seleccionar la ciudad -->
+    <Spinner
+        android:id="@+id/spCiudades"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="📍 Pucallpa"
+        android:layout_marginBottom="24dp"
         android:textAlignment="center"
-        android:textColor="#64748B"
-        android:textSize="18sp"
-        android:layout_marginBottom="24dp" />
+        android:minHeight="48dp"
+        android:spinnerMode="dropdown" />
 
     <!-- FILA 1: Temperatura, Sensación, Humedad -->
     <LinearLayout
@@ -257,7 +258,7 @@
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 
-    <!-- Botón Actualizar (ahora centrado, con margen arriba y bordes ajustados) -->
+    <!-- Botón Actualizar -->
     <Button
         android:id="@+id/btnActualizar"
         android:layout_width="wrap_content"
