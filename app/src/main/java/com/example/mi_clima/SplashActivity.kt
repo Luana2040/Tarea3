@@ -1,74 +1,70 @@
 package com.example.mi_clima
 
+import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.LinearInterpolator
-import android.widget.TextView
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 
 class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_splash)
 
-        val nube1 = findViewById<TextView>(R.id.nube1)
-        val nube2 = findViewById<TextView>(R.id.nube2)
-        val nube3 = findViewById<TextView>(R.id.nube3)
+        val nube1 = findViewById<LinearLayout>(R.id.nube1)
+        val nube2 = findViewById<LinearLayout>(R.id.nube2)
+        val nube3 = findViewById<LinearLayout>(R.id.nube3)
+        val contenido = findViewById<LinearLayout>(R.id.contenido)
 
-        // Animación de la nube 1
-        val animacionNube1 = ObjectAnimator.ofFloat(
-            nube1,
-            "translationX",
-            -300f,
-            900f
-        )
+        // Fade-in del contenido central
+        contenido.animate()
+            .alpha(1f)
+            .setDuration(1500)
+            .setStartDelay(300)
+            .start()
 
-        animacionNube1.duration = 7000
-        animacionNube1.repeatCount = ObjectAnimator.INFINITE
-        animacionNube1.interpolator = LinearInterpolator()
-        animacionNube1.start()
+        // Animaciones de nubes: desplazamiento + vaivén vertical (más realista)
+        animarNube(nube1, -400f, 1100f, 9000, -25f)
+        animarNube(nube2, 1100f, -500f, 11000, 30f)
+        animarNube(nube3, -600f, 1200f, 8000, -18f)
 
-        // Animación de la nube 2
-        val animacionNube2 = ObjectAnimator.ofFloat(
-            nube2,
-            "translationX",
-            300f,
-            -700f
-        )
-
-        animacionNube2.duration = 9000
-        animacionNube2.repeatCount = ObjectAnimator.INFINITE
-        animacionNube2.interpolator = LinearInterpolator()
-        animacionNube2.start()
-
-        // Animación de la nube 3
-        val animacionNube3 = ObjectAnimator.ofFloat(
-            nube3,
-            "translationX",
-            -500f,
-            800f
-        )
-
-        animacionNube3.duration = 8000
-        animacionNube3.repeatCount = ObjectAnimator.INFINITE
-        animacionNube3.interpolator = LinearInterpolator()
-        animacionNube3.start()
-
-        // Esperar 5 segundos y abrir MainActivity
+        // Pasar a MainActivity después de 5 s
         nube1.postDelayed({
-
-            animacionNube1.cancel()
-            animacionNube2.cancel()
-            animacionNube3.cancel()
-
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
-
         }, 5000)
+    }
+
+    /**
+     * Anima una nube horizontalmente y le da un pequeño vaivén vertical
+     * para simular flotación.
+     */
+    private fun animarNube(
+        vista: LinearLayout,
+        desdeX: Float,
+        hastaX: Float,
+        duracion: Long,
+        amplitudY: Float
+    ) {
+        val moverX = ObjectAnimator.ofFloat(vista, "translationX", desdeX, hastaX).apply {
+            this.duration = duracion
+            repeatCount = ObjectAnimator.INFINITE
+            interpolator = LinearInterpolator()
+        }
+
+        val flotarY = ObjectAnimator.ofFloat(vista, "translationY", 0f, amplitudY, 0f).apply {
+            this.duration = 3000
+            repeatCount = ObjectAnimator.INFINITE
+            interpolator = AccelerateDecelerateInterpolator()
+        }
+
+        AnimatorSet().apply {
+            playTogether(moverX, flotarY)
+            start()
+        }
     }
 }
