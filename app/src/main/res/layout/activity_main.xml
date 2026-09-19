@@ -59,13 +59,19 @@
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- Lista de tarjetas -->
+    <!-- Lista de tarjetas con barra de scroll visible -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:paddingHorizontal="16dp"
-        android:paddingBottom="16dp">
+        android:paddingBottom="16dp"
+        android:scrollbars="vertical"
+        android:fadeScrollbars="false"
+        android:scrollbarSize="8dp"
+        android:scrollbarThumbVertical="@android:color/darker_gray"
+        android:scrollbarTrackVertical="@android:color/transparent"
+        android:scrollbarStyle="outsideOverlay">
 
         <LinearLayout
             android:id="@+id/listaCiudades"
