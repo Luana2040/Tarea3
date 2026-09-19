@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:background="#F4F5F9">
 
-    <!-- Encabezado Morado estilo Registro -->
+    <!-- Encabezado Morado -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
@@ -22,11 +22,12 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- Barra de Búsqueda Falsa (Solo diseño) -->
+    <!-- Barra de búsqueda REAL -->
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="16dp"
+        app:cardBackgroundColor="#FFFFFF"
         app:cardCornerRadius="12dp"
         app:cardElevation="2dp"
         app:strokeWidth="1dp"
@@ -41,18 +42,24 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@android:drawable/ic_menu_search"
-                app:tint="#BDBDBD"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                app:tint="#5E17EB"/>
+            <EditText
+                android:id="@+id/etBuscar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginStart="12dp"
-                android:text="Buscar por ciudad..."
-                android:textColor="#D1D5DB"
-                android:textSize="16sp" />
+                android:background="@null"
+                android:hint="Buscar por ciudad..."
+                android:textColorHint="#BDBDBD"
+                android:textColor="#1F2937"
+                android:textSize="16sp"
+                android:inputType="text"
+                android:imeOptions="actionSearch"
+                android:maxLines="1" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- Lista de Tarjetas (ScrollView) -->
+    <!-- Lista -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -61,19 +68,24 @@
         android:paddingBottom="16dp">
 
         <LinearLayout
+            android:id="@+id/listaCiudades"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- ================= TARJETA 1: PUCALLPA ================= -->
+            <!-- ================= TARJETA EXTRA: RESULTADO DE BÚSQUEDA ================= -->
+            <!-- Está oculta por defecto y solo se muestra al buscar una ciudad nueva -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardBusqueda"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:visibility="gone"
                 app:cardBackgroundColor="#FFFFFF"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="3dp"
-                app:strokeWidth="0dp">
+                app:strokeWidth="2dp"
+                app:strokeColor="#5E17EB">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -88,7 +100,84 @@
                         android:orientation="horizontal"
                         android:gravity="center_vertical">
 
-                        <!-- Ícono circular Pucallpa (selva) -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            app:cardBackgroundColor="#EDE7F6"
+                            app:cardCornerRadius="24dp"
+                            app:cardElevation="0dp"
+                            app:strokeWidth="0dp">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="🔍"
+                                android:textSize="24sp" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginStart="16dp">
+                            <TextView
+                                android:id="@+id/tvNombreBusqueda"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Ciudad"
+                                android:textColor="#1F2937"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/tvPaisBusqueda"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="—"
+                                android:textColor="#4B5563"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#E5E7EB"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"/>
+
+                    <TextView
+                        android:id="@+id/tvTempBusqueda"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="🔎 Buscando..."
+                        android:textColor="#374151"
+                        android:textSize="16sp"
+                        android:textAlignment="center"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ================= TARJETA 1: PUCALLPA ================= -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardPucallpa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="3dp"
+                app:strokeWidth="0dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    android:minHeight="160dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="48dp"
                             android:layout_height="48dp"
@@ -103,7 +192,6 @@
                                 android:text="🌴"
                                 android:textSize="24sp" />
                         </com.google.android.material.card.MaterialCardView>
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -124,14 +212,12 @@
                                 android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
-
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="#E5E7EB"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="16dp"/>
-
                     <TextView
                         android:id="@+id/tvTempPucallpa"
                         android:layout_width="match_parent"
@@ -146,6 +232,7 @@
 
             <!-- ================= TARJETA 2: LIMA ================= -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardLima"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -153,21 +240,17 @@
                 app:cardCornerRadius="16dp"
                 app:cardElevation="3dp"
                 app:strokeWidth="0dp">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="20dp"
                     android:minHeight="160dp">
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="center_vertical">
-
-                        <!-- Ícono circular Lima (costa) -->
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="48dp"
                             android:layout_height="48dp"
@@ -182,7 +265,6 @@
                                 android:text="🌊"
                                 android:textSize="24sp" />
                         </com.google.android.material.card.MaterialCardView>
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -203,14 +285,12 @@
                                 android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
-
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="#E5E7EB"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="16dp"/>
-
                     <TextView
                         android:id="@+id/tvTempLima"
                         android:layout_width="match_parent"
@@ -225,6 +305,7 @@
 
             <!-- ================= TARJETA 3: ICA ================= -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardIca"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -232,21 +313,17 @@
                 app:cardCornerRadius="16dp"
                 app:cardElevation="3dp"
                 app:strokeWidth="0dp">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="20dp"
                     android:minHeight="160dp">
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="center_vertical">
-
-                        <!-- Ícono circular Ica (desierto) -->
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="48dp"
                             android:layout_height="48dp"
@@ -261,7 +338,6 @@
                                 android:text="☀️"
                                 android:textSize="24sp" />
                         </com.google.android.material.card.MaterialCardView>
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -282,14 +358,12 @@
                                 android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
-
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="#E5E7EB"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="16dp"/>
-
                     <TextView
                         android:id="@+id/tvTempIca"
                         android:layout_width="match_parent"
@@ -304,6 +378,7 @@
 
             <!-- ================= TARJETA 4: AREQUIPA ================= -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardArequipa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -311,21 +386,17 @@
                 app:cardCornerRadius="16dp"
                 app:cardElevation="3dp"
                 app:strokeWidth="0dp">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="20dp"
                     android:minHeight="160dp">
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="center_vertical">
-
-                        <!-- Ícono circular Arequipa (sierra) -->
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="48dp"
                             android:layout_height="48dp"
@@ -340,7 +411,6 @@
                                 android:text="⛰️"
                                 android:textSize="24sp" />
                         </com.google.android.material.card.MaterialCardView>
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -361,14 +431,12 @@
                                 android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
-
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="#E5E7EB"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="16dp"/>
-
                     <TextView
                         android:id="@+id/tvTempArequipa"
                         android:layout_width="match_parent"
@@ -383,6 +451,7 @@
 
             <!-- ================= TARJETA 5: CUSCO ================= -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardCusco"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -390,21 +459,17 @@
                 app:cardCornerRadius="16dp"
                 app:cardElevation="3dp"
                 app:strokeWidth="0dp">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="20dp"
                     android:minHeight="160dp">
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="center_vertical">
-
-                        <!-- Ícono circular Cusco (imperio) -->
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="48dp"
                             android:layout_height="48dp"
@@ -419,7 +484,6 @@
                                 android:text="🏛️"
                                 android:textSize="24sp" />
                         </com.google.android.material.card.MaterialCardView>
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -440,14 +504,12 @@
                                 android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
-
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="#E5E7EB"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="16dp"/>
-
                     <TextView
                         android:id="@+id/tvTempCusco"
                         android:layout_width="match_parent"
