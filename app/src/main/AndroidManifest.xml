@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mi_clima">
 
-        <!-- Pantalla de inicio -->
+        <!-- Pantalla de inicio con animación de nubes -->
         <activity
             android:name=".SplashActivity"
             android:exported="true">
@@ -28,7 +28,7 @@
 
         </activity>
 
-        <!-- Pantalla principal -->
+        <!-- Pantalla principal de la aplicación -->
         <activity
             android:name=".MainActivity"
             android:exported="false"
