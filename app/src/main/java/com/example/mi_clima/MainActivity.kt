@@ -103,9 +103,6 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    /**
-     * Geocodifica el nombre de la ciudad y consulta el clima en la API.
-     */
     private fun buscarCiudadEnApi(
         nombre: String,
         tvNombre: TextView,
@@ -163,9 +160,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Consulta el clima para una lat/lon y actualiza el TextView dado.
-     */
     private fun obtenerClima(lat: Double, lon: Double, textView: TextView) {
         lifecycleScope.launch {
             try {
