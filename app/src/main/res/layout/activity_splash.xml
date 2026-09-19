@@ -6,7 +6,7 @@
     android:clipChildren="false"
     android:clipToPadding="false">
 
-    <!-- Fondo: cielo con nubes (más ancho que la pantalla para que se pueda desplazar) -->
+    <!-- Fondo: cielo con nubes -->
     <ImageView
         android:id="@+id/fondoCielo"
         android:layout_width="2000dp"
@@ -15,7 +15,7 @@
         android:scaleType="centerCrop"
         android:src="@drawable/img" />
 
-    <!-- Oscurecido sutil para que el texto blanco se lea bien -->
+    <!-- Oscurecido sutil -->
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -32,6 +32,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tvTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:letterSpacing="0.08"
@@ -45,6 +46,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/tvSubtitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
